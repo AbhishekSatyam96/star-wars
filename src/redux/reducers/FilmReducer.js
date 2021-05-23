@@ -10,8 +10,8 @@ const FilmReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTION_TYPES.GET_CHARACTERS:
             return {
-                ...state,
-                filmRecord: [...state.filmRecord, payload]
+                // ...state,
+                filmRecord: payload
             }
         default:
             return state;
