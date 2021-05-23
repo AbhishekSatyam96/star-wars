@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Text, SafeAreaView, FlatList, View, StyleSheet, TouchableOpacity, TextInput
+    Text, SafeAreaView, FlatList, View, StyleSheet, TouchableOpacity, TextInput, ImageBackground
 } from 'react-native';
 import { getCharacters } from '../redux/actions/Filmaction';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+const imageURL = {
+    uri: "https://lumiere-a.akamaihd.net/v1/images/star-wars-the-rise-of-skywalker-theatrical-poster-1000_ebc74357.jpeg?region=0%2C0%2C891%2C1372"
+};
 
 const Screens = (props) => {
 
     const [characterData, setCharacterData] = useState([]);
+    const [flag, setFlag] = useState(false);
 
-    console.log("props here", props);
     useEffect(() => {
         const callData = async () => {
             await props.getCharacters();
@@ -22,46 +25,60 @@ const Screens = (props) => {
     useEffect(() => {
         setCharacterData(props.allCharacter);
     }, [props?.allCharacter])
-    // console.log("characterData", characterData);
 
-    const Item = ({ name }) => (
-        <TouchableOpacity
-            style={styles.button}
-        >
-            <Text style={{ backgroundColor: "#DDDDDD", color: 'green', fontSize: 16 }}>{name}</Text>
-        </TouchableOpacity>
-    )
+    const details = (url) => {
+        console.log("url", url);
+        setFlag(true)
+    }
 
-    const renderList = ({ item }) => (
-        <Item
-            name={item.name}
-        />
-    )
+    const Item = ({ data }) => {
+        return (
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => details(data.url)}
+            >
+                <Text style={{ backgroundColor: "#DDDDDD", color: 'green', fontSize: 16 }}>{data.name}</Text>
+            </TouchableOpacity>)
+    }
 
-    const handleFilter = async(event) => {
+    const renderList = ({ item }) => {
+        return (
+            <Item
+                data={item}
+            />
+        )
+    }
+
+    const handleFilter = async (event) => {
         await props.getCharacters(event);
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text
-                style={styles.headerTitle}
-            >Get the details of Star-wars Movie</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Type to search..."
-                onChangeText={handleFilter}
-            />
-            <Text
-                style={{
-                    backgroundColor: '#fff',
-                    color: 'red',
-                }}
-            >Some of the top Characters</Text>
-            <FlatList
-                data={characterData}
-                renderItem={renderList}
-            />
+            <ImageBackground
+                source={imageURL}
+                style={styles.backImage}
+            >
+                <Text
+                    style={styles.headerTitle}
+                >Get the details of Star-wars Movie</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Type to search character..."
+                    onChangeText={handleFilter}
+                />
+                <Text
+                    style={{
+                        backgroundColor: '#fff',
+                        color: 'red',
+                    }}
+                >Some of the top Characters</Text>
+                <FlatList
+                    data={characterData}
+                    renderItem={renderList}
+                // keyExtractor={item => item.id}
+                />
+            </ImageBackground>
         </SafeAreaView>
     )
 };
@@ -100,6 +117,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#fff',
     },
+    backImage: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        resizeMode: 'cover',
+      },
 })
 
 const mapStateToProps = state => {
