@@ -15,3 +15,14 @@ export const getCharacters = (text) => (dispatch) => {
         })
         .catch(err => console.error("err", err))
 }
+
+export const detailsCharacter = (url) => (dispatch) => {
+    axios.get(url)
+        .then(res =>{
+            dispatch({
+                type: ACTION_TYPES.CHARACTERS_DETAILS,
+                payload: res.data
+            })
+        })
+        .catch(err => console.error("error",err))
+}

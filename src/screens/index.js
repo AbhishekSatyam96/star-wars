@@ -26,8 +26,9 @@ const Screens = (props) => {
     }, [props?.allCharacter])
 
     const details = (url) => {
-        console.log("url", url);
-        props.navigation.navigate('Character details')
+        props.navigation.navigate('Character details',{
+            url
+        })
     }
 
     const Item = ({ data }) => {

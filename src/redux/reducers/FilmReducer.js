@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '../actions/ActionTypes';
 let initialState = {
-    filmRecord: []
+    filmRecord: [],
+    charDetails: []
 }
 
 const FilmReducer = (state = initialState, action) => {
@@ -10,8 +11,13 @@ const FilmReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTION_TYPES.GET_CHARACTERS:
             return {
-                // ...state,
+                ...state,
                 filmRecord: payload
+            }
+        case ACTION_TYPES.CHARACTERS_DETAILS:
+            return{
+                ...state,
+                charDetails: payload
             }
         default:
             return state;
