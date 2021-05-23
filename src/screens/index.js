@@ -13,7 +13,6 @@ const imageURL = {
 const Screens = (props) => {
 
     const [characterData, setCharacterData] = useState([]);
-    const [flag, setFlag] = useState(false);
 
     useEffect(() => {
         const callData = async () => {
@@ -28,7 +27,7 @@ const Screens = (props) => {
 
     const details = (url) => {
         console.log("url", url);
-        setFlag(true)
+        props.navigation.navigate('Character details')
     }
 
     const Item = ({ data }) => {
