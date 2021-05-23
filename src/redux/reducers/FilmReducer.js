@@ -1,5 +1,7 @@
 import { ACTION_TYPES } from '../actions/ActionTypes';
-let initialState = []
+let initialState = {
+    filmRecord: []
+}
 
 const FilmReducer = (state = initialState, action) => {
     const {
@@ -9,7 +11,7 @@ const FilmReducer = (state = initialState, action) => {
         case ACTION_TYPES.GET_CHARACTERS:
             return {
                 ...state,
-                todoData: [...state.todoData, payload]
+                filmRecord: [...state.filmRecord, payload]
             }
         default:
             return state;
