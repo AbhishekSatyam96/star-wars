@@ -11,10 +11,8 @@ const imageURL = {
 };
 
 const CharacterDetails = (props) => {
-    console.log("props in details", props);
 
     const [record, setRecord] = useState([]);
-    const [flag, setFlag] = useState(0)
 
     useEffect(() => {
         const callData = async () => {
@@ -24,16 +22,9 @@ const CharacterDetails = (props) => {
     }, [])
 
     useEffect(() => {
-
-    },[flag, record])
-
-    useEffect(() => {
-        console.log("props here", props);
         setRecord(props.details);
-        setFlag(flag + 1);
     }, [props.details])
 
-    console.log("record", record);
 
     return (
         <ImageBackground
@@ -68,7 +59,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'red',
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
         fontWeight: 'bold',
         fontSize: 16
     }

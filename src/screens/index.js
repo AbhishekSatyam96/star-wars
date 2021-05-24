@@ -13,6 +13,7 @@ const imageURL = {
 const Screens = (props) => {
 
     const [characterData, setCharacterData] = useState([]);
+    const [isFilter, setIsFilter] = useState(false);
 
     useEffect(() => {
         const callData = async () => {
@@ -23,23 +24,22 @@ const Screens = (props) => {
 
     useEffect(() => {
         setCharacterData(props.allCharacter);
-    }, [props?.details])
+    }, [props?.allCharacter])
 
     const details = (url) => {
-        props.navigation.navigate('Character details',{
+        props.navigation.navigate('Character details', {
             url
         })
     }
 
-    const Item = ({ data }) => {
-        return (
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => details(data.url)}
-            >
-                <Text style={{ backgroundColor: "#DDDDDD", color: 'green', fontSize: 16 }}>{data.name}</Text>
-            </TouchableOpacity>)
-    }
+    const Item = ({ data }) => (
+        <TouchableOpacity
+            style={styles.button}
+            onPress={() => details(data.url)}
+        >
+            <Text style={styles.nameText}>{data.name}</Text>
+        </TouchableOpacity>
+    )
 
     const renderList = ({ item }) => {
         return (
@@ -50,6 +50,11 @@ const Screens = (props) => {
     }
 
     const handleFilter = async (event) => {
+        if (event.length > 0) {
+            setIsFilter(true)
+        } else {
+            setIsFilter(false)
+        }
         await props.getCharacters(event);
     }
     return (
@@ -70,8 +75,10 @@ const Screens = (props) => {
                     style={{
                         backgroundColor: '#fff',
                         color: 'red',
+                        fontWeight: 'bold',
+                        fontSize: 16
                     }}
-                >Below are Some of the top Characters</Text>
+                >{isFilter ? `Filter result` : `Get the details of Star-wars Movie`}</Text>
                 <FlatList
                     data={characterData}
                     renderItem={renderList}
@@ -90,8 +97,10 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: "center",
-        // backgroundColor: "#DDDDDD",
-        padding: 10
+        backgroundColor: "rgba(221, 221, 221, 0.3)",
+        padding: 10,
+        marginBottom: 10,
+
     },
     image: {
         flex: 1,
@@ -122,7 +131,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         resizeMode: 'cover',
-      },
+    },
+    nameText: {
+        backgroundColor: "#DDDDDD",
+        color: 'green',
+        fontSize: 16,
+        borderRadius: 10,
+        fontWeight: 'bold'
+    }
 })
 
 const mapStateToProps = state => {
