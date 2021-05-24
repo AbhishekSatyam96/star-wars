@@ -23,7 +23,7 @@ const Screens = (props) => {
 
     useEffect(() => {
         setCharacterData(props.allCharacter);
-    }, [props?.allCharacter])
+    }, [props?.details])
 
     const details = (url) => {
         props.navigation.navigate('Character details',{
@@ -52,7 +52,6 @@ const Screens = (props) => {
     const handleFilter = async (event) => {
         await props.getCharacters(event);
     }
-
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
@@ -72,7 +71,7 @@ const Screens = (props) => {
                         backgroundColor: '#fff',
                         color: 'red',
                     }}
-                >Some of the top Characters</Text>
+                >Below are Some of the top Characters</Text>
                 <FlatList
                     data={characterData}
                     renderItem={renderList}
